@@ -1,0 +1,36 @@
+<div class="pull-right">
+	<%= link_to 'Edit', edit_question_path(@question), class: "btn btn-default" %> |
+	<%= link_to 'Back to Main Page', questions_path, class: "btn btn-default" %>
+</div>
+
+<h3><%= @question.title %></h3>
+<p>ASKED BY<%= @question.author.email %></p>
+<p>clicks:::::<%= @question.clicks %></p>
+<p>
+  <%= @question.body %>
+</p>
+
+<h1>Answers</h1>
+<hr />
+<% answers = @question.answers.desc(:votes, :created_at).page params[:page] %>
+<% answers.each do |answer| %>
+	<div class="an-answer">
+		<a name=<%= answer.id %>></a>
+		<%= link_to 'Upvote', upvote_answer_path(answer), method: :post %>
+		<%= link_to 'Downvote', downvote_answer_path(answer), method: :post %>
+		<!-- <button>Upvote</button>
+		<button>Downvote</button> -->
+		  <strong>votes:</strong> <%= answer.votes %>
+		  <strong>ANSWERED BY</strong> <%= answer.author.email %>
+		<p><%= answer.body %></p>
+		<%= link_to 'Add to favorites', add_to_favorite_favorites_path(answer_id: answer.id), data: { confirm: "Are you sure?" }, method: :post %>
+		<br /><hr />
+	</div>
+<% end -%>
+
+<%= paginate answers %>
+
+<%= form_for(Answer.new, url: answer_question_path) do |f| %>
+	<%= f.text_area :body %><br /><br />
+	<%= f.submit class: "btn btn-default"%>
+<% end -%>

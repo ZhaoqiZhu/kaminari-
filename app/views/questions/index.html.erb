@@ -1,0 +1,50 @@
+<div class="btn-group">
+  <% if params[:index].to_i == 0 %>
+    <%= link_to 'Hottest Questions', questions_path(index: 0), class: "btn btn-default active", autofocus: true %>
+    <%= link_to 'Hottest Answers', questions_path(index: 1), class: "btn btn-default" %>
+  <% elsif params[:index].to_i == 1 %>
+    <%= link_to 'Hottest Questions', questions_path(index: 0), class: "btn btn-default", autofocus: true %>
+    <%= link_to 'Hottest Answers', questions_path(index: 1), class: "btn btn-default active" %>
+  <% end -%>
+  <%= link_to 'New Question', new_question_path, class: "btn btn-default" %>
+</div>
+
+<div class="btn-group pull-right">
+  <% if current_user.admin? %>
+    <%= link_to 'Manage All Users', users_path, class: "btn btn-default" %>
+  <% end -%>
+  <%= link_to 'My Home Page', myself_path(index: 0), class: "btn btn-default" %>
+</div>
+
+<% if params[:index].to_i == 0 %>
+  <h1>Hottest Questions</h1>
+  <hr />
+  <div class="hottest_questions">
+    <% @questions.each do |question| %>
+      <div>
+        <h5><strong><%= link_to "#{question.title}", question_path(question) %></strong> ASKED BY<%= question.author.email %></h5>
+        <p><%= question.body %></p>
+        <%= question.answers_count %> answers | 
+        <%= question.total_votes %> total votes
+        <br /><hr />
+      </div>
+    <% end -%>
+  </div>
+
+  <%= paginate @questions, :param_name => "questions_page" %>
+<% elsif params[:index].to_i == 1 %>
+  <h1>Hottest Answers</h1>
+  <hr />
+  <div class="hottest_answers">
+    <% answers = Answer.all.desc(:votes, :created_at).page params[:answers_page] %>
+    <% answers.each do |answer| %>
+      <div>
+        <h5><strong><%= link_to "#{answer.question.title}", question_path(answer.question) %></strong></h5>
+          <%= answer.votes %> votes <br /><br />
+          <p><%= link_to "#{answer.body}", question_path(answer.question, page: (answer.question.answers.desc(:votes, :created_at).to_a.index(answer) / Answer.default_per_page + 1), anchor: answer.id) %></p>
+          <hr />
+      </div>
+    <% end -%>
+  </div>
+  <%= paginate answers, :param_name => "answers_page" %>
+<% end -%>

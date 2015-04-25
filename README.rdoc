@@ -1,0 +1,13 @@
+== Excelsior
+
+Excelsior is an online community where users can ask and answer questions. 
+
+Once you register, you can choose to browse the hottest questions or the hottest answers. The latter is sorted by the votes of each answer while the former is sorted by the sum of the votes of all answers as well as the number of answers.
+
+Each user will also has a home page where all his questions and answers are listed. 
+
+Plus, there's an additional favorite feature which allows users to add their favorite answers and browse them in their home page.
+
+Please notice that any inappropriate word or behaviour may cause your question/answer to be deleted or even your account banned.
+
+Have fun using Excelsior!

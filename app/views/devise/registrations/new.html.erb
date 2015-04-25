@@ -1,0 +1,58 @@
+<head>
+  <style type="text/css">
+  .container {
+    font-size: 15px;
+  }
+  .msg{
+    font-size: 15px;
+    color: white;
+  }
+  #contentContainer{overflow:hidden; zoom:1;}
+  .left{width:200px; margin-bottom:-3000px; padding-bottom:3000px; background:#f0f3f9; float:left;}
+  .right{width:200px; margin-bottom:-3000px; padding-bottom:3000px; background:#f0f3f9; float:right;}
+  .center{font-size: 15px; margin:0 210px 0 210px; background:#cad5eb;text-align: center}
+  </style>
+</head>
+
+<div id="contentContainer">
+  <div class="left"></div>
+  <div class="right"></div>
+  <div class="center">
+    <h2>Sign up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <% if resource.errors.present? %>
+      <ul class="msg">
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end -%>
+
+      </ul>
+    <% end -%>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <% if @validatable %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
+<% end %>
